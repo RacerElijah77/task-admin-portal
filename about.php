@@ -1,0 +1,172 @@
+<?php
+    require_once "php/database-handler.php";
+  
+    // Make sure to establish database connection first!
+    session_start();
+    if(!isset($_SESSION['loggedin'])){
+        header('Location: login.php');
+        exit(0);
+    }
+
+    // Obtain currently logged in admin information
+    $su_access = $_SESSION['su_access'];
+    $admin_email = $_SESSION['admin_email'];
+    $admin_username = $_SESSION['admin_username'];
+    
+?>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Custom fonts for this template-->
+        <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+        <link href="css/font-styles.css" rel="stylesheet">
+
+        <title>TASK Admin Portal About</title>
+
+        <style>
+            .centered {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                /* bring your own prefixes */
+                transform: translate(-50%, -50%);
+            }
+        </style>
+
+    </head>
+    
+    <body style="background-color: white;" id="page-top">
+
+        <!-- Navigation Bar -->
+        <nav class="navbar navbar-expand-md fixed-top bg-dark border-bottom p-3 border-body shadow">
+            <div class="container-fluid">
+                    <a class="navbar-brand text-white" href="index.php">
+                        <img src="./assets/images/Task Logo Color JPG.png" alt="task_logo.png" height="25px" class="d-inline-block align-text-top me-3">
+                        Learning Module Admin Portal
+                    </a>
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        
+                        <!--  Only give access to Admin management if given superuser access-->
+                        <?php
+                            if($su_access === 1)
+                        {
+                        ?>
+                             <li class="nav-item">
+                                <a class="nav-link text-light" href="admins-table.php">Admins</a>
+                            </li>
+                        <?php
+                        }
+                        ?>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="users-table.php">Users</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="lesson-modules-table.php">Modules</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="quizzes-table.php">Quizzes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" href="about.php">About Us</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class= "nav-link text-light"><i>Currently Logged in as: <?=htmlspecialchars($_SESSION['admin_email'], ENT_QUOTES)?></i></a>
+                        </li>
+                        <li class="nav-item5">
+                            <a class="text-light btn btn-secondary ml-4" href="logout.php">Logout</a>
+                        </li>
+                    </ul>
+            </div>
+        </nav>
+        <!-- End of Navigation Bar -->
+
+        <!-- Page Wrapper Div -->
+        <div id="wrapper" style="margin-top: 5rem;">
+
+            <?php include('php/message.php'); ?>
+
+            <div class="mt-3">
+                <div class = "card shadow rounded text-bg-dark h-75 m-4 p-4">
+                    <h1 class="text-center">About Admin Portal</h1>
+                    <hr>
+
+                    <div class = "text-center">
+                        <h4>This page will show all related information regarding project history/contributions, and resources for TASK and the Bonner institute.</h4>
+                        <h5>Thank you for all of the people who contributed to this project!</h5>
+                    </div>
+
+                    <div class = "container-fluid text-center mt-4">
+                        <div class = "row">
+
+                            <!-- Card to list general information about TASK  -->
+                            <div class ="col-4">
+                                <div class = "card p-2 ">
+                                    <h3 class="mb-4 mt-2">About TASK</h3>
+                                    <img src="assets/images/Task Logo Orange.png" alt="task_logo_about.png" style="width: 12rem; display: block; margin-left: auto; margin-right: auto;">
+                                    <hr>
+                                    <p>The development of the admin portal was through collaboration with the Trenton Area Soup Kitchen (TASK).
+                                     TASK feeds the hungry and offers programs and services to encourage self-sufficiency 
+                                     and improve quality of life for people in the Greater Trenton Area. TASK provides case management services, 
+                                     adult education programs, job search assistance and creative arts classes, empowering those we serve to thrive, not just survive.
+                                    </p>
+                                    
+                                    <div class = "row mt-3">
+                                        <div class = "col"><a href="https://trentonsoupkitchen.org/" class = "btn btn-primary" role ="button" target="_blank" rel="noopener noreferrer">Home Page for TASK</a></div>
+                                        <div class = "col"><a href="https://trentonsoupkitchen.org/faq/" class = "btn btn-secondary" role ="button" target="_blank" rel="noopener noreferrer">TASK FAQs</a></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card to list general information about the TCNJ Bonner Institute -->
+                            <div class = "col-4">
+                                <div class = "card p-2">
+                                    <h3 class="mb-4 mt-2">About Bonner Institute</h3>
+                                    <img src="assets/images/bonner logo export.png" alt="bonner_about.png" style="width: 25rem; display: block; margin-left: auto; margin-right: auto;">
+                                    <hr>
+                                    <p>Additionally, insight on the project was contributed also by The Bonner Institute at TCNJ. It is a need-based scholarship program 
+                                    for students at TCNJ that involves 300 hours of service and training per year. 
+                                    Students meet every other Tuesday as a program and meet one-on-one with their advisors at the 
+                                    beginning and end of the semester. Participants receive up to 4 years of funding, depending on their grade at acceptance. 
+                                    </p>
+                                    <div class = "row mt-3">
+                                        <div class = "col"><a href="https://cce.tcnj.edu/bonner-institute/" class = "btn btn-primary" role ="button" target="_blank" rel="noopener noreferrer">Home Page for Bonner</a></div>
+                                        <div class = "col"><a href="https://cce.tcnj.edu/bonner-institute/bonner-community-partners/" class = "btn btn-secondary" role ="button" target="_blank" rel="noopener noreferrer">Bonner Community Partners</a></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card to list all people who contributed to this project -->
+                            <div class = "col-4">
+                                <div class = "card p-2">
+                                    <h3 class="mb-4 mt-2">Project Contributors</h3>
+                                    <h5 class="mb-4">Here is a list of all the people who contributed to this project!</h5>
+                                    <ul class = "list-group list-group-flush">
+                                        <li class="list-group-item">Dr. Deborah Knox, Ph.D. - Department of Computer Science (Faculty Mentor)</li>
+                                        <li class="list-group-item">Elijah Gasataya - Class of 2024, B.S. Computer Science</li>
+                                        <li class="list-group-item">Samielle Taylor - Class of 2024, B.S. Biology</li>
+                                        <li class="list-group-item">Frank Masters - Chief Innovation & Programs Officer, Trenton Area Soup Kitchen (TASK)</li>
+                                        <li class="list-group-item">Samuel Kanig - Coordinator, TCNJ Bonner Institute</li>
+                                        <li class="list-group-item">Shawn Sivy - TCNJ HPC Systems Adminstrator</li>
+                                    </ul>
+                                </div>
+                            </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- End of Page Wrapper Div -->
+
+</body>
